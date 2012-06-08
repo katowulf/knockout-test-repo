@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+      "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+   <title>jQuery Typewriter Example</title>
+
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+   <script type="text/javascript" src="jquery.jtype.js"></script>
+
+   <script type="text/javascript">
+      jQuery(function($) { //onready
+
+         function _stripHtml(txt, breaks) {
+             if( breaks ) {
+                txt = txt.replace(/<br[^>]*>/g, "\n").replace(/<(div|blockquote|p)[^>]*>/g, "\n\n");
+             }
+            return txt.replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/  +/g, ' ');
+         }
+
+         function _run(txt, opts) {
+             $('#out div').jtype(txt, opts);
+             $('#out input').jtype(_stripHtml(txt), opts);
+             $('#out textarea').jtype(_stripHtml(txt, true), opts);
+         }
+
+//          speed:          30,
+//                  variance:       80,
+//                  startDelay:      0,
+//                  pause:        null,
+//                  errPercent:      3,
+//                  errSpeed:      200,
+//                  hide:        false, // false = don't hide, any integer = fade out in this many milliseconds
+//                  prompt:     '<span class="prompt">&nbsp;</span>',
+//                  complete:     null
+
+
+          function _add(opts, key) {
+             var i, parts, val = $('fieldset [name="'+key+'"]').val();
+             if( val ) {
+                 switch(key) {
+                     case 'pauses':
+                       opts.pauses = {};
+                       parts = val.split(',');
+                       for(i=0; i < parts.length; i++) {
+                          opts.pauses[parts[i]] = 2000;
+                       }
+                       break;
+                     case 'hide':
+                       if( val === 'false' ) { val = false; }
+                       else { val = ~~val; }
+                       opts[key] = val;
+                       break;
+                     default:
+                       opts[key] = ~~val; // an integer
+                 }
+             }
+         }
+
+         $('#stop').click(function() {
+             $('#out div:first-child, #out p :first-child').each(function() {
+                 var fx = $(this).data('jtype-abort');
+                 if( fx ) { fx(); }
+             });
+         });
+
+         $('#start').click(function() {
+             var opts = {}, keys = ['speed', 'variance', 'startDelay', 'pause', 'errPercent', 'errSpeed', 'hide'],
+                 start = _stripHtml($('fieldset [name="startText"]').val());
+             for(var i=0; i < keys.length; i++) {
+                 _add(opts, keys[i])
+             }
+
+             // abort any running typists
+             $('#out div:first-child, #out p :first-child').each(function() {
+                var fx = $(this).data('jtype-abort');
+                 if( fx ) { fx(); }
+             });
+
+             // start the typists
+             $('#out div:first-child').html(start);
+             $('#out textarea, #out input').val(start);
+             _run($('fieldset [name="text"]').val(), opts);
+
+         }).click();
+
+      });
+   </script>
+
+   <style type="text/css">
+      body {
+         background-color: #eee;
+      }
+
+      div#out {
+          margin: 30px;
+      }
+
+      #out div {
+         background-color: #fff;
+         font-size: 1.5em;
+         line-height: 1.5;
+         padding: 10px;
+      }
+
+      #out span.prompt {
+         background-color: black;
+         margin-left: 5px;
+         padding: 0 2px;
+      }
+
+      #out textarea {
+          width: 500px;
+          height: 350px;
+      }
+
+      fieldset label, fieldset input [type=button] {
+          display: block;
+          float: left;
+          margin: 10px;
+          padding: 10px;
+      }
+
+      fieldset label span {
+          display: block;
+          font-weight: bold;
+      }
+
+      fieldset textarea {
+          width: 250px;
+          height: 5em;
+      }
+
+      blockquote {
+         line-height: 1;
+      }
+
+   </style>
+
+</head>
+<body>
+
+<fieldset>
+    <legend>options</legend>
+
+    <label>
+        <span>Text to type</span>
+        <textarea name="text" id="text" cols=20 rows=5>it was the worst of times,&lt;blockquote&gt;it was the age of wisdom,&lt;br /&gt;it was the age of foolishness,&lt;br /&gt;it was the epoch of belief,&lt;br /&gt;it was the epoch of incredulity,&lt;br /&gt;it was the season of Light,&lt;br /&gt;it was the season of Darkness,&lt;br /&gt;it was the spring of hope,&lt;br /&gt;it was the winter of despair,&lt;/blockquote&gt;&lt;p&gt;We had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way--in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.&lt;/p&gt;&lt;p&gt;There were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever.&lt;/p&gt;</textarea>
+    </label>
+
+    <label>
+        <span>Start text</span>
+        <input type="text" name="startText" size=10 value="It was the best of times, " />
+    </label>
+
+    <label>
+        <span>Speed</span>
+        <input type="text" name="speed" size=4 value="30" />
+    </label>
+
+    <label>
+        <span>Variance</span>
+        <input type="text" name="variance" size=4 value="80" />
+    </label>
+
+    <label>
+        <span>Pause</span>
+        <input type="text" name="pause" size=8 value="26,50" />
+    </label>
+
+    <label>
+        <span>Error percent</span>
+        <input type="text" name="errPercent" size=8 value="3" />
+    </label>
+
+    <label>
+        <span>Error speed</span>
+        <input type="text" name="errSpeed" size=8 value="200" />
+    </label>
+
+    <label>
+        <span>Hide</span>
+        <input type="text" name="hide" size=4 value="1000" />
+    </label>
+
+    <label>
+        <span>Start delay</span>
+        <input type="text" name="startDelay" size=5 value="0" />
+    </label>
+
+    <input type="button" id="start" value="Start" />
+    <input type="button" id="stop" value="Stop" />
+
+</fieldset>
+
+<div id="out">
+    <div></div>
+    <p><input size=100 type=text value='' /></p>
+    <p><textarea></textarea></p>
+</div>
+
+</body>
+</html>

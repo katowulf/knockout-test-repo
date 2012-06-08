@@ -1,0 +1,18 @@
+{
+    "name": "knockout-node",
+    "description": "Test node server for knockout proof",
+    "version": "1.0.0",
+    "author": {
+        "name": "Kato Wulf"
+    },
+    "dependencies": {
+        "express": ">=2.5.9",
+        "express-resource": ">=0.2.4",
+        "mocha": ">= 1.1.0",
+        "chai": ">= 1.0.4"
+    },
+    "main": "index",
+    "engines": {
+        "node": ">= 0.6.13"
+    }
+}

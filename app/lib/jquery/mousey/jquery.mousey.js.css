@@ -1,0 +1,59 @@
+body {
+   background-color: #FAFAFA;
+}
+
+#head {
+   height: 100px;
+   width: 100%;
+   background-color: #eee;
+}
+
+#foot {
+   height: 75px;
+   width: 100%;
+   background-color: #aaa;
+}
+
+#content {
+   position: relative;
+   margin: 0 25%;
+   height: 500px;
+   z-index: 1;
+   background-color: #FFF;
+   border: 1px solid gray;
+}
+
+#one, #two, #three {
+   position: absolute;
+   display: block;
+   padding: 5px;
+   color: white;
+   z-index: 2;
+}
+
+#one.active, #two.active, #three.active {
+   border: 5px solid black;
+}
+
+#one {
+   top: 5px;
+   left: 5px;
+   width: 10%;
+   height: 10%;
+   background-color: red;
+}
+
+#two {
+   right: 5px;
+   bottom: 5px;
+   width: 50px;
+   height: 3em;
+   background-color: blue;
+}
+
+#three {
+   top: 500px;
+   left: 500px;
+   background-color: yellow;
+   color: black;
+}
