@@ -3,13 +3,27 @@
    <div class="span6">
        <h2>Client</h2>
        <div class="well">
-
+          <table class="table table-striped">
+             <thead><tr><th>ID</th><th>Name</th><th>Counter</th><th></th></tr></thead>
+             <tbody data-bind="foreach: users">
+             <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: fullName"></td>
+                <td data-bind="text: counter"></td>
+                <td><a href="#" class="btn" data-bind="click: $parent.removeUser"><i class="icon-remove-sign"></i></a></td>
+             </tr>
+             </tbody>
+          </table>
+          <form method="post" class="form-inline" data-bind="submit: addUserForm">
+             <input type="text" class="input-small" name="fname" placeholder="first name" />
+             <input type="text" class="input-small" name="lname" placeholder="last name" />
+             <button type="submit" class="btn">Add</button>
+          </form>
        </div>
    </div>
    <div class="span6">
        <h2>Server</h2>
-       <div class="well">
-
-       </div>
+       <pre class="alert alert-info" data-bind='text: serverData'>
+       </pre>
    </div>
 </div>

@@ -1,4 +1,8 @@
 
+var count = 5
+      , out = exports
+      , everyone;
+
 var users = {
    'user1': {
       fname: 'Jack',
@@ -32,17 +36,15 @@ var users = {
    }
 };
 
-var count = 5;
-
-exports.index = function(req, res){
-   res.send(users);
+out.index = function(req, res){
+   res.json(users);
 };
 
-//exports.new = function(req, res){
+//out.new = function(req, res){
 //   res.send('new user');
 //};
 
-exports.create = function(req, res) {
+out.create = function(req, res) {
    var body = req.body, c = ++count, key = 'user'+count;
    var newUser = {
       fname: body.fname,
@@ -51,27 +53,38 @@ exports.create = function(req, res) {
       id: c
    };
    users[key] = newUser;
-   res.send(newUser);
+   res.json({s: 1, a: 'c', user: newUser});
+   everyone.now.update(users);
 };
 
-exports.show = function(req, res){
-   res.send(users['user'+req.params.user]);
+out.show = function(req, res){
+   res.json(users['user'+req.params.user]);
 };
 
-//exports.edit = function(req, res){
+//out.edit = function(req, res){
 //   var user = users['user'+req.params.user];
 //   res.send({s: true, user: user});
 //};
 
-exports.update = function(req, res){
+out.update = function(req, res){
    var user = users['user'+req.params.user];
-   user.fname = req.body.fname;
-   user.lname = req.body.lname;
+   user.fname = req.query.fname;
+   user.lname = req.query.lname;
    user.counter++;
-   res.send({s: true, user: user});
+   res.json({s: 1, a: 'u', user: user});
+   everyone.now.update(users);
 };
 
-exports.destroy = function(req, res){
-   delete users['user'+req.params.user];
-   res.send({s: true, user: req.params.user});
+out.destroy = function(req, res){
+   var id = req.params.user;
+   console.log('deleting user '+id);
+   delete users['user'+id];
+   res.json({s: 1, a: 'd', user: id});
+   everyone.now.update(users);
+};
+
+module.exports = function(conf) {
+   everyone = conf.everyone;
+//   everyone = require('now').initialize(conf.app);
+   return out;
 };

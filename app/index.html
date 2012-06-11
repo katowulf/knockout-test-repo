@@ -25,13 +25,23 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="#welcome">KO</a>
+            <a class="brand" href="#home">KO</a>
             <ul class="nav">
-                <li><a href="#bootstrap">bootstrap</a></li>
-                <li><a href="#ajax">ajax</a></li>
-                <li><a href="#grid">grid</a></li>
+               <li><a href="#ajax">ajax</a></li>
+               <li class="dropdown">
+                  <a href="#"
+                     class="dropdown-toggle"
+                     data-toggle="dropdown">
+                     bootstrap
+                     <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="#grid">grid</a></li>
+                     <li><a href="#base">base css</a></li>
+                  </ul>
+               </li>
             </ul>
-            <div id="clock" class="pull-right"></div>
+            <div id="clock" class="pull-right" data-bind="text: location.hostname"></div>
         </div>
     </div>
 </div>
@@ -40,19 +50,30 @@
     <h1 class="span12" data-bind="text: viewPort">Welcome</h1>
 </div>
 
-<div class="container" id="viewPort">
-
-</div>
+<div class="container" id="viewPort"></div>
 
 <footer>
     <p>Footer</p>
 </footer>
 
-<script type='text/javascript' src='lib/jquery/jquery.js'></script>
-<script type='text/javascript' src='lib/knockout/knockout.js'></script>
-<script type='text/javascript' src='lib/bootstrap/js/bootstrap.js'></script>
-<script type='text/javascript' src='lib/sammy/sammy.js'></script>
-<script type='text/javascript' src='js/app.js'></script>
+<script type="text/javascript" src="lib/js/normalizeconsole.js?v=1"></script>
+<script type="text/javascript" src="lib/js/json2.js?v=1"></script>
+<script type='text/javascript' src='lib/jquery/jquery.js?v=1'></script>
+<script type='text/javascript' src='lib/knockout/knockout.js?v=1'></script>
+<script type='text/javascript' src='lib/bootstrap/js/bootstrap.js?v=1'></script>
+<script type='text/javascript' src='lib/pathjs/path.js?v=1'></script>
+<script type='text/javascript' src='lib/underscore/underscore.js?v=1'></script>
+<script type='text/javascript' src='lib/moment/moment.js?v=1'></script>
+<script type='text/javascript' src='http://ko.test:3000/nowjs/now.js?v=1'></script>
+<script type="text/javascript">
+   // include now.js from the API server, we assume the host name is the same
+   // and that the port is 3000 (for the time being)
+//   jQuery.getScript(location.protocol+'//'+location.hostname+':3000/nowjs/now.js?v=1', function(){
+//      console.info('nowjs loaded', now);
+//   });
+
+</script>
+<script type='text/javascript' src='js/app.js?v=1'></script>
 
 </body>
 </html>
