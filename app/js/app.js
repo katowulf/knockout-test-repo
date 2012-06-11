@@ -127,6 +127,59 @@
       self.lname = ko.observable(data.lname);
       self.counter = ko.observable(data.counter);
       self.fullName = ko.computed(function() { return self.fname() + ' ' + self.lname() })
+
+      self.createNameForm = function(user) {
+
+      }
+
+      self.updateName = function(form) {
+         var $form = $(form), $first = $form.find('input[name="fname"]'), $last = $form.find('input[name="lname"]');
+         var user = self;
+         //todo combine with AjaxViewModel::addUserForm
+         $.ajax({
+            url: apiUrl+'/test/user/',
+            data: ko.toJS(user),
+            type: 'PUT',
+            dataType: 'json'
+         })
+            .then(
+            function(json){ // success
+               // do stuff with json (in this case an array)
+               if( json.s === 1 ) {
+                  $.each(['id', 'fname', 'lname', 'counter'], function(i, k) {
+                     user[k](json.user[k]);
+                  });
+               }
+               else { console.error(json.m); }
+            },
+            function(e){ // failure
+               console.error(e);
+            });
+         return false;
+      }
+
+   }
+
+   /*************************
+    * Custom Bindings
+    *************************/
+
+   /**
+    * Renders first/last name form for updating a user account
+    */
+   ko.bindingsHandler.editUserForm = {
+      init: function() {
+         return { 'controlsDescendantBindings': true };
+      },
+      update: function(element, viewModelAccessor, allBindingsAccessor) {
+         var $e = $(element), form = $e.data('updateUserForm'), viewModel = viewModelAccessor(), allBindings = allBindingsAccessor();
+
+         if( !form ) {
+            //todo templateEngine = new ko.nativeTemplateEngine();
+            //todo ko.renderTemplate(...)
+         }
+
+      }
    }
 
    /*************************

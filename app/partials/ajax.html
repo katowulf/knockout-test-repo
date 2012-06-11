@@ -8,7 +8,7 @@
              <tbody data-bind="foreach: users">
              <tr>
                 <td data-bind="text: id"></td>
-                <td data-bind="text: fullName"></td>
+                <td data-bind="click: createNameForm, text: fullName"></td>
                 <td data-bind="text: counter"></td>
                 <td><a href="#" class="btn" data-bind="click: $parent.removeUser"><i class="icon-remove-sign"></i></a></td>
              </tr>
@@ -27,3 +27,11 @@
        </pre>
    </div>
 </div>
+
+<script type="text/html" id="edit-person-template">
+    <form method="post" class="form-inline" data-bind="submit: updateName">
+        <input type="text" class="input-small" name="fname" placeholder="first name" />
+        <input type="text" class="input-small" name="lname" placeholder="last name" />
+        <button type="submit" class="btn">Add</button>
+    </form>
+</script>
