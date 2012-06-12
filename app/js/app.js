@@ -1,5 +1,10 @@
 (function($) {
 
+   /**************************
+    * Config
+    **************************/
+   var apiUrl = 'http://localhost:3000';
+
    /*************************
     * Control Logic
     *************************/
@@ -42,7 +47,7 @@
    }
 
    function AjaxViewModel() {
-      var self = this, apiUrl = 'http://localhost:3000';
+      var self = this;
       this.users = ko.observableArray();
       this.serverData = ko.observable('loading...');
 
@@ -126,28 +131,32 @@
       self.fname = ko.observable(data.fname);
       self.lname = ko.observable(data.lname);
       self.counter = ko.observable(data.counter);
-      self.fullName = ko.computed(function() { return self.fname() + ' ' + self.lname() })
+      self.fullName = ko.computed(function() { return self.fname() + ' ' + self.lname() });
+      self.editMode = ko.observable(false);
 
-      self.createNameForm = function(user) {
+      self.toggleEditMode = function() {
+         self.editMode( !self.editMode() );
+      };
 
-      }
-
-      self.updateName = function(form) {
-         var $form = $(form), $first = $form.find('input[name="fname"]'), $last = $form.find('input[name="lname"]');
+      self.updateName = function() {
          var user = self;
+         self.toggleEditMode();
          //todo combine with AjaxViewModel::addUserForm
          $.ajax({
-            url: apiUrl+'/test/user/',
-            data: ko.toJS(user),
-            type: 'PUT',
+            url: apiUrl+'/test/user/'+user.id(),
+            data: $.extend(ko.toJS(user), {_method: 'PUT'}),
+            type: 'POST',
             dataType: 'json'
          })
             .then(
             function(json){ // success
-               // do stuff with json (in this case an array)
+               //do stuff with json (in this case an array)
                if( json.s === 1 ) {
                   $.each(['id', 'fname', 'lname', 'counter'], function(i, k) {
-                     user[k](json.user[k]);
+                     if( user[k]() !== json.user[k] ) {
+                        //user[k](json.user[k]);
+                        console.log('got new value for '+k, json.user[k]);//todo
+                     }
                   });
                }
                else { console.error(json.m); }
@@ -164,24 +173,6 @@
     * Custom Bindings
     *************************/
 
-   /**
-    * Renders first/last name form for updating a user account
-    */
-   ko.bindingsHandler.editUserForm = {
-      init: function() {
-         return { 'controlsDescendantBindings': true };
-      },
-      update: function(element, viewModelAccessor, allBindingsAccessor) {
-         var $e = $(element), form = $e.data('updateUserForm'), viewModel = viewModelAccessor(), allBindings = allBindingsAccessor();
-
-         if( !form ) {
-            //todo templateEngine = new ko.nativeTemplateEngine();
-            //todo ko.renderTemplate(...)
-         }
-
-      }
-   }
-
    /*************************
     * Utility Functions
     *************************/
@@ -194,7 +185,6 @@
          ko.applyBindings(model, this);
       });
    }
-
 
       window.now.ping = function(text) {
          console.log('pinged!', text);

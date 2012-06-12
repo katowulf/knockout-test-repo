@@ -68,8 +68,8 @@ out.show = function(req, res){
 
 out.update = function(req, res){
    var user = users['user'+req.params.user];
-   user.fname = req.query.fname;
-   user.lname = req.query.lname;
+   user.fname = req.body.fname;
+   user.lname = req.body.lname;
    user.counter++;
    res.json({s: 1, a: 'u', user: user});
    everyone.now.update(users);
