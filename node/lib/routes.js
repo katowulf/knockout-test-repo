@@ -53,6 +53,8 @@ module.exports = function(conf) {
       console.log('is dev');
       app.resource('test/user', require('./test/user')(conf));
       app.resource('test/ping', require('./test/ping')(conf));
+      //todo this isn't really a route :(
+      require('./test/chat')(conf);
    }
 
    app.get('/', function(req, res){

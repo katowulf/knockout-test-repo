@@ -8,16 +8,20 @@
              <tbody data-bind="foreach: users">
              <tr>
                 <td data-bind="text: id"></td>
-                <td data-bind="click: createNameForm, text: fullName"></td>
+                <td>
+                   <a href="#" data-bind="text: fullName, click: $parent.toggleEditMode, visible: !editMode()"></a>
+                   <div data-bind="template: {name: 'edit-person-template'}, visible: editMode()"></div>
+                </td>
                 <td data-bind="text: counter"></td>
-                <td><a href="#" class="btn" data-bind="click: $parent.removeUser"><i class="icon-remove-sign"></i></a></td>
+                <td><a href="#" class="btn" data-bind="click: $parent.removeUser"><i class="icon-remove"></i></a></td>
+                    <!--<i class="icon-remove-sign"></i></a></td>-->
              </tr>
              </tbody>
           </table>
           <form method="post" class="form-inline" data-bind="submit: addUserForm">
              <input type="text" class="input-small" name="fname" placeholder="first name" />
              <input type="text" class="input-small" name="lname" placeholder="last name" />
-             <button type="submit" class="btn">Add</button>
+             <button type="submit" class="btn"><i class="icon-plus-sign"></i></button>
           </form>
        </div>
    </div>
@@ -29,9 +33,9 @@
 </div>
 
 <script type="text/html" id="edit-person-template">
-    <form method="post" class="form-inline" data-bind="submit: updateName">
-        <input type="text" class="input-small" name="fname" placeholder="first name" />
-        <input type="text" class="input-small" name="lname" placeholder="last name" />
-        <button type="submit" class="btn">Add</button>
-    </form>
+      <form class="form-inline" data-bind="submit: $parent.updateUser">
+         <input type="text" class="input-small" name="fname" placeholder="first name" data-bind='value: fname' />
+         <input type="text" class="input-small" name="lname" placeholder="last name" data-bind='value: lname' />
+         <button type="submit" class="btn"><i class="icon-ok-sign"></i></button>
+      </form>
 </script>

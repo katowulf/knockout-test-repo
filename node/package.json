@@ -14,6 +14,7 @@
       , "now":        ">=0.8.1"
       , "reloader":   ">=1.0.2"
       , "underscore": ">=1.3.3"
+      , "node-uuid":  ">=1.3.3"
    }
    , "main": "index"
    , "engines": {

@@ -1,6 +1,8 @@
 var express = require('express')
+   , _u = require('underscore')
    , app = express.createServer()
    , os = require('os')
+   , uuid = require('node-uuid')
    , conf = {
          app: app,
          host: os.hostname(),
@@ -8,12 +10,9 @@ var express = require('express')
          instance: 'dev-local-wsnode',
          version: '0.1-alpha',
          devmode: app.settings.env !== 'production',
-         everyone: require('now').initialize(app)
+         everyone: require('now').initialize(app),
+         fixtures: require('./lib/test/fixtures')
       };
-
-conf.everyone.now.ack = function(json) {
-   console.log('ack', json)
-};
 
 require('./lib/config')(express, conf);
 
@@ -33,3 +32,11 @@ else {
    app.listen(conf.port);
 }
 
+var everyone = conf.everyone;
+
+//todo move to chat.js
+everyone.now.distribute = function(message){
+   console.log('chat message', message);
+   // this.now exposes caller's scope
+   everyone.now.receive(this.now.name, message);
+};

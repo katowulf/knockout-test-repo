@@ -1,43 +1,12 @@
 
 var count = 5
-      , out = exports
-      , everyone;
-
-var users = {
-   'user1': {
-      fname: 'Jack',
-      lname: 'Campbell',
-      id: 1,
-      counter: 1
-   },
-   'user2': {
-      fname: 'Sara',
-      lname: 'Connors',
-      id: 2,
-      counter: 1
-   },
-   'user3': {
-      fname: 'Bill',
-      lname: 'Brown',
-      id: 3,
-      counter: 1
-   },
-   'user4': {
-      fname: 'Casey',
-      lname: 'Wayne',
-      id: 4,
-      counter: 1
-   },
-   'user5': {
-      fname: 'Sara',
-      lname: 'Mitchel',
-      id: 5,
-      counter: 1
-   }
-};
+   , out = exports
+   , everyone
+   , users
+   , _u = require('underscore');
 
 out.index = function(req, res){
-   res.json(users);
+   res.json(_data());
 };
 
 //out.new = function(req, res){
@@ -46,6 +15,7 @@ out.index = function(req, res){
 
 out.create = function(req, res) {
    var body = req.body, c = ++count, key = 'user'+count;
+   console.log('body', body);
    var newUser = {
       fname: body.fname,
       lname: body.lname,
@@ -53,8 +23,8 @@ out.create = function(req, res) {
       id: c
    };
    users[key] = newUser;
-   res.json({s: 1, a: 'c', user: newUser});
-   everyone.now.update(users);
+   res.json({s: 1, a: 'c', id: newUser.id});
+   _update({a: 'c', user: newUser});
 };
 
 out.show = function(req, res){
@@ -68,23 +38,50 @@ out.show = function(req, res){
 
 out.update = function(req, res){
    var user = users['user'+req.params.user];
-   user.fname = req.query.fname;
-   user.lname = req.query.lname;
+   user.fname = req.body.fname;
+   user.lname = req.body.lname;
    user.counter++;
-   res.json({s: 1, a: 'u', user: user});
-   everyone.now.update(users);
+   res.json({s: 1, a: 'u', id: user.id});
+   _update({a: 'u', user: user})
 };
 
 out.destroy = function(req, res){
-   var id = req.params.user;
+   var id = req.params.user, u = users['user'+id];
    console.log('deleting user '+id);
    delete users['user'+id];
-   res.json({s: 1, a: 'd', user: id});
-   everyone.now.update(users);
+   res.json({s: 1, a: 'd', id: id});
+   _update({a: 'd', user: u});
 };
 
 module.exports = function(conf) {
    everyone = conf.everyone;
+   users = conf.fixtures.users;
 //   everyone = require('now').initialize(conf.app);
    return out;
 };
+
+function _data() {
+   var data = [];
+   for(key in users) {
+      data.push(users[key]);
+   }
+   return data;
+}
+
+function _update(data) {
+   if( everyone.now.serverUpdate ) {
+      everyone.now.serverUpdate(users);
+   }
+   else {
+      console.error('now.serverUpdate was not declared on client?');
+   }
+   setTimeout(function() {
+      if( everyone.now.update ) {
+         console.log('sending user update', data);
+         everyone.now.update(data);
+      }
+      else {
+         console.error('now.update was not declared on client?');
+      }
+   }, 500);
+}

@@ -5,6 +5,7 @@
     <title>Knockout Test</title>
 
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.css" />
     <style type="text/css">
         /* must appear between bootstrap and bootstrap-responsive or window resize
            will cause the fixed top nav to move around unexpectedly */
@@ -28,6 +29,7 @@
             <a class="brand" href="#home">KO</a>
             <ul class="nav">
                <li><a href="#ajax">ajax</a></li>
+               <li><a href="#chat">chat</a></li>
                <li class="dropdown">
                   <a href="#"
                      class="dropdown-toggle"
@@ -40,6 +42,7 @@
                      <li><a href="#base">base css</a></li>
                   </ul>
                </li>
+               <li><a href="#" data-toggle="modal" data-target="#pingform">ping</a></li>
             </ul>
             <div id="clock" class="pull-right" data-bind="text: location.hostname"></div>
         </div>
@@ -47,32 +50,45 @@
 </div>
 
 <div class="container">
-    <h1 class="span12" data-bind="text: viewPort">Welcome</h1>
+    <div class="row">
+        <div class="span12" id="pingbox"></div>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="span12" data-bind="text: viewPort"></h1>
 </div>
 
 <div class="container" id="viewPort"></div>
 
 <footer>
-    <p>Footer</p>
+footer
 </footer>
+
+<div class="modal hide fade" id="pingform">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+    </div>
+    <div class="modal-body">
+        <form class="form-inline" data-bind="submit: sendPing">
+            <input type="text" name="message" />
+            <button type="submit" class="btn">send ping</button>
+        </form>
+        <p class="note">you may also ping <a target="_NEW" href="http://ko.test:3000/test/ping?m=message+here">via HTTP</a></p>
+    </div>
+</div>
 
 <script type="text/javascript" src="lib/js/normalizeconsole.js?v=1"></script>
 <script type="text/javascript" src="lib/js/json2.js?v=1"></script>
 <script type='text/javascript' src='lib/jquery/jquery.js?v=1'></script>
+<script type='text/javascript' src='lib/jquery/jquery.xdomainrequest.js?v=1'></script>
 <script type='text/javascript' src='lib/knockout/knockout.js?v=1'></script>
+<script type='text/javascript' src='lib/knockout/ko.mapping.js?v=1'></script>
 <script type='text/javascript' src='lib/bootstrap/js/bootstrap.js?v=1'></script>
 <script type='text/javascript' src='lib/pathjs/path.js?v=1'></script>
 <script type='text/javascript' src='lib/underscore/underscore.js?v=1'></script>
 <script type='text/javascript' src='lib/moment/moment.js?v=1'></script>
 <script type='text/javascript' src='http://ko.test:3000/nowjs/now.js?v=1'></script>
-<script type="text/javascript">
-   // include now.js from the API server, we assume the host name is the same
-   // and that the port is 3000 (for the time being)
-//   jQuery.getScript(location.protocol+'//'+location.hostname+':3000/nowjs/now.js?v=1', function(){
-//      console.info('nowjs loaded', now);
-//   });
-
-</script>
 <script type='text/javascript' src='js/app.js?v=1'></script>
 
 </body>

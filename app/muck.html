@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+
+    <script type="text/javascript" src="lib/js/normalizeconsole.js?v=1"></script>
+    <!--<script type="text/javascript" src="lib/js/json2.js?v=1"></script>-->
+    <script type='text/javascript' src='lib/jquery/jquery.js?v=1'></script>
+    <!--<script type='text/javascript' src='lib/knockout/knockout.js?v=1'></script>-->
+    <!--<script type='text/javascript' src='lib/bootstrap/js/bootstrap.js?v=1'></script>-->
+    <!--<script type='text/javascript' src='lib/pathjs/path.js?v=1'></script>-->
+    <!--<script type='text/javascript' src='lib/underscore/underscore.js?v=1'></script>-->
+    <!--<script type='text/javascript' src='lib/moment/moment.js?v=1'></script>-->
+    <script type='text/javascript' src='http://ko.test:3000/nowjs/now.js?v=1'></script>
+
+    <script type="text/javascript">
+
+        now.ready(function() {
+            $('body').append('<p>Now is ready</p>');
+            now.receive = function(name, message){
+                $("#messages").append("<br>"+name+": "+message);
+            };
+        });
+
+        jQuery(function($) {
+            now.ready(function() {
+                var n = Math.floor(Math.random()*50)+1;
+                now.name = prompt("What's your name?", "kato"+n);
+                now.distribute('joined chat');
+
+                $("#send-button").click(function(){
+                    console.log('clicked');
+                    now.distribute($("#text-input").val());
+                    $("#text-input").val("");
+                });
+            })
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div id="messages"></div>
+<textarea id="text-input"></textarea>
+<button class="btn" id="send-button">send</button>
+
+</body>
+</html>

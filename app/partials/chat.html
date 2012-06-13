@@ -1,0 +1,29 @@
+<script>
+    jQuery(function() {
+//        now.name = prompt("What's your name?", "kato");
+//        now.receive = function(name, message){
+//            $("#messages").append("<br>"+name+": "+message);
+//        }
+//        $("#send-button").click(function(){
+//            now.distribute($("#text-input").val());
+//        });
+    })
+</script>
+
+<div class="row">
+    <div class="span12">
+        <div id="messages" class="well"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <form class="form-inline" data-bind="submit: sendMessage, visible: userName()">
+            <input type="text" name="message" value="hello world!" />
+            <button class="btn" type="submit">send</button>
+        </form>
+        <form class="form-inline" data-bind="submit: setName, visible: !userName()">
+            <input type="text" name="userName" value="kato" />
+            <button type="submit" class="btn">set name</button>
+        </form>
+    </div>
+</div>

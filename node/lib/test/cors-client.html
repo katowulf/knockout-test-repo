@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cross-Origin Resource Sharing (CORS) With jQuery And Node.js</title>
+</head>
+<body>
+
+<h1>
+    Cross-Origin Resource Sharing (CORS) With jQuery And Node.js
+</h1>
+
+
+<h2>
+    PUT Response
+</h2>
+
+    <pre id="putResponse">
+        <!-- To be populated dynamically. -->
+    </pre>
+
+
+<h2>
+    DELETE Response
+</h2>
+
+    <pre id="deleteResponse">
+        <!-- To be populated dynamically. -->
+    </pre>
+
+
+
+<!-- Load our JavaScript and make some CORS requests. -->
+<script type="text/javascript" src="../../../app/lib/js/json2.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+    jQuery.support.cors = true;
+
+
+    // Wrap up the PUT request execution.
+    var makePUTRequest = function(){
+
+        // Make the PUT request.
+        $.ajax({
+            type: "PUT",
+            url: "http://localhost:8080/some/url/resource/path",
+            contentType: "application/json",
+            data: JSON.stringify({
+                name: "Tricia",
+                age: 37
+            }),
+            dataType: "text",
+            success: function( response ){
+
+                // Put the plain text in the PRE tag.
+                $( "#putResponse" ).text( response );
+
+            },
+            error: function( error ){
+
+                // Log any error.
+                console.log( "ERROR:", error );
+
+            },
+            complete: function(){
+
+                // When this completes, execute teh
+                // DELETE request.
+                makeDELETERequest();
+
+            }
+        });
+
+    };
+
+
+    // Wrap up the DELETE request execution so it can easily be
+    // invoked from the end of the PUT delete response.
+    var makeDELETERequest = function(){
+
+        // Make the DELETE request.
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/some/url/resource/path",
+            contentType: "application/json",
+            data: JSON.stringify({
+                name: "Tricia",
+                age: 37
+            }),
+            dataType: "text",
+            success: function( response ){
+
+                // Put the plain text in the PRE tag.
+                $( "#deleteResponse" ).text( response );
+
+            },
+            error: function( error ){
+
+                // Log any error.
+                console.log( "ERROR:", error );
+
+            }
+        });
+
+    };
+
+
+    // Execute the PUT request.
+    makePUTRequest();
+
+
+</script>
+</body>
+</html>
