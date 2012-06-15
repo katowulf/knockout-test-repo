@@ -8,13 +8,35 @@ jQuery.support.cors = true;
     **************************/
    var apiUrl = 'http://ko.test:3000';
 
+   var navRoutes = ['home', 'ajax', 'chat', 'grid', 'base', 'components', 'ko-group', 'awesome'];
+
+   var fruits = [
+      {
+         name: "Apple",
+         shape: "Round",
+         color: "Green"},
+      {
+         name: "Orange",
+         shape: "Round",
+         color: "Orange"},
+      {
+         name: "Satsuma",
+         shape: "Round",
+         color: "Orange"},
+      {
+         name: "Bananna",
+         shape: "Weird",
+         color: "Yellow"}
+   ];
+
    /*************************
     * Control Logic
     *************************/
 
    var submodels = {
       ajax: new AjaxViewModel(),
-      chat: new ChatViewModel()
+      chat: new ChatViewModel(),
+      "ko-group": new BasketViewModel(fruits)
    };
 
    var mainModel = new MainViewModel();
@@ -25,6 +47,7 @@ jQuery.support.cors = true;
     * Data Models
     *************************/
 
+   // ajax.html
    function UserDataModel(data) {
       console.log('creating user', data);
       var self = this;
@@ -48,6 +71,7 @@ jQuery.support.cors = true;
     * View Models
     *************************/
 
+   // index.html
    function MainViewModel() {
       var self = this;
 
@@ -62,13 +86,16 @@ jQuery.support.cors = true;
          now.sendPing(form.message.value);
       }
 
-      $.each(['home', 'ajax', 'chat', 'grid', 'base', 'components'], function(i, k) {
+      $.each(navRoutes, function(i, k) {
          Path.map('#'+k).to(function() { _navRoute(k, self); });
       });
 
       Path.rescue(function() {
-         alert('Did not find that route');
+         console.log('did not find route', this.current );
+         return true;
       });
+
+      Path.map("#tables").to(function(){}).enter(function(){return false;});
 
       Path.root('#home');
 
@@ -80,6 +107,7 @@ jQuery.support.cors = true;
 
    }
 
+   // ajax.html
    function AjaxViewModel() {
       var self = this;
       self.users = ko.mapping.fromJS([], {
@@ -150,7 +178,6 @@ jQuery.support.cors = true;
          self.toggleEditMode(user);
          console.log('updating user');
          $.ajax({
-            //todo "input[@type=image]"
             url: apiUrl+'/test/user/'+user.id(),
             data: $.extend(ko.toJS(user), {_method: 'PUT'}),
             type: 'POST',
@@ -235,6 +262,7 @@ jQuery.support.cors = true;
       }
    }
 
+   // chat.html
    function ChatViewModel() {
       var self = this;
       self.userName = ko.observable();
@@ -248,9 +276,37 @@ jQuery.support.cors = true;
       }
    }
 
+   // ko-group.html
+   function BasketViewModel(fruits) {
+      var self = this;
+      self.fruits = ko.mapping.fromJS(fruits);
+      self.groupBy = ko.observable('color');
+
+      self.groupedFruits = ko.computed(function() {
+         var grouping = self.groupBy();
+         var results = [];
+         ko.utils.arrayForEach(this.fruits(), function(item) {
+            var group = $.grep(results, function(e, i){
+               return e.name==item[grouping]();
+            })[0];
+
+            if(group==null)
+            {
+               results.push({name:item[grouping](), items:[item]});
+               return;
+            }
+            group.items.push(item);
+         });
+         return results;
+      },self);
+
+   }
+
    /*************************
     * Custom Bindings
     *************************/
+
+
 
    /*************************
     * Utility Functions
@@ -280,10 +336,55 @@ jQuery.support.cors = true;
       now.ack(text);
    }
 
+   function _ajax(url, data, method, thenFx) {
+      var dat = { url: apiUrl+url, dataType: 'json' };
+      if( data ) { dat.data = data; }
+      switch(method) {
+         case 'GET':
+            dat.url = _url(dat.url, data);
+            break;
+         case 'POST':
+            dat.type = 'POST';
+            break;;
+         case 'DELETE': // fall through
+         case 'PUT':
+            dat.type = 'POST';
+            dat.data = $.extend({}, data, {_method: method});
+         default:
+            console.error('invalid method', method);
+      }
+
+      $.ajax(dat)
+      .then(
+         (thenFx || function() { console.log('success'); }),
+         function(e, status, msg) { // failure
+            if( e instanceof Error || typeof(status) !== 'string' ) {
+               console.error(e);
+            }
+            else {
+               console.error(status, ' ', msg);
+            }
+         }
+      );
+   }
+
+   function _url(url, data) {
+      //todo
+      //todo
+      //todo
+      //todo
+   }
+
+   /***************************
+    * Persistence (nowjs calls)
+    ***************************/
+
+   /** index.html **/
+
    // ping test
    now.ping = function(message) {
       console.log('ping received', message);
-      var $alert = $('<div class="alert alert-info"></div>').text(message).hide().prependTo('#pingbox').slideDown(500);
+      var $alert = $('<div class="alert alert-info"></div>').text(message).prepend('<button class="close" data-dismiss="alert">×</button>').hide().prependTo('#pingbox').slideDown(500);
       _ack(message);
 
       setTimeout(function() {
@@ -291,21 +392,26 @@ jQuery.support.cors = true;
       }, 5000);
    };
 
+   /** chat.html **/
+
+   // chat message received
    now.receive = function(name, msg) {
       $('#messages').append('<p>'+name+': '+$('<span />').text(msg).html()+'</p>');
    }
+
+   /** ajax.html **/
 
    // change a user record
    now.update = function(json) {
       submodels.ajax.userUpdated(json);
    }
 
-   // client sync
+   // sync all user records
    now.syncUsers = function(json) {
       submodels.ajax.syncDataModel(json);
    }
 
-   // server sync
+   // sync server data about users (for comparison)
    now.serverUpdate = function(data) {
       console.log('update received from server');
       submodels.ajax.updateServerData(data);

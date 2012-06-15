@@ -1,0 +1,15 @@
+<ul data-bind="foreach: groupedFruits">
+    <li data-bind="text: name"></li>
+    <ul data-bind="foreach: items">
+        <li data-bind="text: name">
+        </li>
+
+    </ul>
+</ul>
+
+Group by:
+<input type='radio' name="type" value='color' data-bind='checked: groupBy' />Color
+<input type='radio' name="type" value='shape' data-bind='checked: groupBy' />Shape
+<input type='radio' name="type" value='name' data-bind='checked: groupBy' />Name
+
+<p class="note">This page and associated model are from <a href="http://jsfiddle.net/markjperry/ZK53j/16/">Mark Perry's fiddle</a></p>

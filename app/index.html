@@ -2,6 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Knockout Test</title>
 
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css" />
@@ -18,10 +19,11 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" href="lib/prettify/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
 
 </head>
-<body>
+<body data-spy="scroll" data-target=".subnav" data-offset="50" data-twttr-rendered="true">
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -30,19 +32,31 @@
             <ul class="nav">
                <li><a href="#ajax">ajax</a></li>
                <li><a href="#chat">chat</a></li>
-               <li class="dropdown">
-                  <a href="#"
-                     class="dropdown-toggle"
-                     data-toggle="dropdown">
-                     bootstrap
-                     <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                     <li><a href="#grid">grid</a></li>
-                     <li><a href="#base">base css</a></li>
-                  </ul>
-               </li>
-               <li><a href="#" data-toggle="modal" data-target="#pingform">ping</a></li>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">
+                        bootstrap
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#grid">grid</a></li>
+                        <li><a href="#base">base css</a></li>
+                        <li><a href="#awesome">font-awesome</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">
+                        knockout
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#ko-group">grouping</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" data-toggle="modal" data-target="#pingform">ping</a></li>
             </ul>
             <div id="clock" class="pull-right" data-bind="text: location.hostname"></div>
         </div>
@@ -56,7 +70,7 @@
 </div>
 
 <div class="container">
-    <h1 class="span12" data-bind="text: viewPort"></h1>
+    <h1 data-bind="text: viewPort"></h1>
 </div>
 
 <div class="container" id="viewPort"></div>
@@ -82,6 +96,7 @@ footer
 <script type="text/javascript" src="lib/js/json2.js?v=1"></script>
 <script type='text/javascript' src='lib/jquery/jquery.js?v=1'></script>
 <script type='text/javascript' src='lib/jquery/jquery.xdomainrequest.js?v=1'></script>
+<script type='text/javascript' src='lib/prettify/prettify.js?v=1'></script>
 <script type='text/javascript' src='lib/knockout/knockout.js?v=1'></script>
 <script type='text/javascript' src='lib/knockout/ko.mapping.js?v=1'></script>
 <script type='text/javascript' src='lib/bootstrap/js/bootstrap.js?v=1'></script>
@@ -89,7 +104,7 @@ footer
 <script type='text/javascript' src='lib/underscore/underscore.js?v=1'></script>
 <script type='text/javascript' src='lib/moment/moment.js?v=1'></script>
 <script type='text/javascript' src='http://ko.test:3000/nowjs/now.js?v=1'></script>
-<script type='text/javascript' src='js/app.js?v=1'></script>
+<script type='text/javascript' src='assets/js/app.js?v=1'></script>
 
 </body>
 </html>
