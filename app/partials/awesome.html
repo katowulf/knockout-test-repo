@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="assets/css/fontawesome.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/awesome.css" />
 
 <section id="all-icons" class="row">
 <div class="span12">
@@ -358,14 +358,14 @@
       <div class="span4">
          <div class="btn-toolbar">
             <div class="btn-group">
-               <a class="btn" href="#"><i class="icon-align-left"></i></a>
-               <a class="btn" href="#"><i class="icon-align-center"></i></a>
-               <a class="btn" href="#"><i class="icon-align-right"></i></a>
-               <a class="btn" href="#"><i class="icon-align-justify"></i></a>
+               <a class="btn" href="#"><i class="icon-align-left"></i>&nbsp;</a>
+               <a class="btn" href="#"><i class="icon-align-center"></i>&nbsp;</a>
+               <a class="btn" href="#"><i class="icon-align-right"></i>&nbsp;</a>
+               <a class="btn" href="#"><i class="icon-align-justify"></i>&nbsp;</a>
             </div>
             <div class="btn-group">
                <a class="btn btn-primary" href="#"><i class="icon-user"></i> User</a>
-               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span>&nbsp;</a>
                <ul class="dropdown-menu">
                   <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
                   <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
@@ -394,9 +394,9 @@
             </div>
          </form>
          <div>
-                    <span class="rating">
-                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                    </span>
+           <span class="rating">
+               <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+           </span>
          </div>
       </div>
    </div>
@@ -467,6 +467,8 @@
          modalModel.name($(this).find('i').attr('class'));
          $('#modal').modal('show');
       });
+
+      $('section a[href=#]').click(function() { return false; });
 
    });
 </script>

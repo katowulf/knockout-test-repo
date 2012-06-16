@@ -1,8 +1,4 @@
 
-i {
-   color: #333;
-}
-
 .the-icons {
    list-style-type: none;
    margin-left: 0;
@@ -46,6 +42,7 @@ i {
    text-align: center;
    padding-right: 4px;
 }
+
 #examples .btn-toolbar {
    margin-top: 0;
    margin-bottom: 20px;
