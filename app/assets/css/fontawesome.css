@@ -1,0 +1,189 @@
+
+i {
+   color: #333;
+}
+
+.the-icons {
+   list-style-type: none;
+   margin-left: 0;
+}
+.the-icons li {
+   cursor: pointer;
+   line-height: 42px;
+   height: 42px;
+   padding-left: 12px;
+   -webkit-border-radius: 12px;
+   -moz-border-radius: 12px;
+   border-radius: 12px;
+}
+.the-icons li [class^="icon-"],
+.the-icons li [class*=" icon-"] {
+   width: 32px;
+   font-size: 16px;
+}
+.the-icons li:hover {
+   background-color: #fbf4f4;
+}
+.the-icons li:hover [class^="icon-"],
+.the-icons li:hover [class*=" icon-"] {
+   *font-size: 24px;
+   *vertical-align: middle;
+}
+.the-icons li:hover [class^="icon-"]:before,
+.the-icons li:hover [class*=" icon-"]:before {
+   font-size: 24px;
+   vertical-align: middle;
+}
+#all-icons h3,
+#new-icons h3 {
+   margin-top: 10px;
+}
+#why .row {
+   margin-bottom: 20px;
+}
+#why .icon-large {
+   font-size: 22px;
+   text-align: center;
+   padding-right: 4px;
+}
+#examples .btn-toolbar {
+   margin-top: 0;
+   margin-bottom: 20px;
+}
+#integration .row {
+   margin-bottom: 40px;
+}
+#examples form,
+#code form {
+   margin-bottom: 25px;
+}
+#examples form input,
+#code form input {
+   line-height: 1;
+}
+#examples .rating,
+#code .rating {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+   font-size: 30px;
+}
+#examples .rating span.star,
+#code .rating span.star {
+   font-family: FontAwesome;
+   font-weight: normal;
+   font-style: normal;
+   display: inline-block;
+}
+#examples .rating span.star:hover,
+#code .rating span.star:hover {
+   cursor: pointer;
+}
+#examples .rating span.star:before,
+#code .rating span.star:before {
+   content: "\f006";
+   padding-right: 5px;
+   color: #999999;
+}
+#examples .rating span.star:hover:before,
+#code .rating span.star:hover:before,
+#examples .rating span.star:hover ~ span.star:before,
+#code .rating span.star:hover ~ span.star:before {
+   content: "\f005";
+   color: #e3cf7a;
+}
+.modal {
+   width: 580px;
+   max-height: 600px;
+}
+.modal .modal-body {
+   *overflow: hidden;
+   max-height: none;
+   padding-bottom: 0;
+}
+.modal .modal-body .row {
+   margin-bottom: 15px;
+}
+
+/** override bootstrap responsive (the sizing of our modal is very picky) */
+.modal .modal-body .row .span3,
+.modal .modal-body .row .span2,
+.modal .modal-body .row .span1 { margin-left: 20px; }
+
+.modal .modal-body div.thumbnail {
+   text-align: center;
+}
+.modal .modal-body div.thumbnail div {
+   margin-bottom: 5px;
+}
+.modal .modal-body .icon6 {
+   width: 325px;
+}
+.modal .modal-body .icon6 > div.thumbnail > div {
+   line-height: 340px;
+   height: 323px;
+   text-align: center;
+}
+.modal .modal-body .icon6 > div.thumbnail > div i {
+   font-size: 340px;
+}
+.modal .modal-body .icon5 {
+   width: 185px;
+}
+.modal .modal-body .icon5 > div.thumbnail > div {
+   line-height: 180px;
+   height: 171px;
+   text-align: center;
+}
+.modal .modal-body .icon5 > div.thumbnail > div i {
+   font-size: 180px;
+}
+.modal .modal-body .icon4 {
+   width: 215px;
+}
+.modal .modal-body .icon4 > div.thumbnail > div {
+   line-height: 100px;
+   height: 95px;
+   text-align: center;
+}
+.modal .modal-body .icon4 > div.thumbnail > div i {
+   font-size: 100px;
+}
+.modal .modal-body .icon3 {
+   width: 120px;
+}
+.modal .modal-body .icon3 > div.thumbnail > div {
+   line-height: 50px;
+   height: 47.5px;
+   text-align: center;
+}
+.modal .modal-body .icon3 > div.thumbnail > div i {
+   font-size: 50px;
+}
+.modal .modal-body .icon2 {
+   width: 75px;
+}
+.modal .modal-body .icon2 > div.thumbnail > div {
+   line-height: 20px;
+   height: 19px;
+   text-align: center;
+}
+.modal .modal-body .icon2 > div.thumbnail > div i {
+   font-size: 20px;
+}
+.modal .modal-body .icon1 {
+   width: 60px;
+}
+.modal .modal-body .icon1 > div.thumbnail > div {
+   line-height: 12px;
+   height: 11.399999999999999px;
+   text-align: center;
+}
+.modal .modal-body .icon1 > div.thumbnail > div i {
+   font-size: 12px;
+}
+
+ul.icons {
+   list-style-type: none;
+   margin-left: 2em;
+   text-indent: -0.8em;
+}

@@ -1,4 +1,15 @@
 
+/* Bootstrap tweaks
+-------------------------------------------------- */
+
+i[class^="icon-"] {
+   opacity: 1;
+}
+
+.icon-large:before {
+   vertical-align: middle;
+}
+
 /* Modify prettyprint output
 -------------------------------------------------- */
 .com { color: #93a1a1; }

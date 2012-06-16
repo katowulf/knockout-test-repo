@@ -8,7 +8,7 @@ jQuery.support.cors = true;
     **************************/
    var apiUrl = 'http://ko.test:3000';
 
-   var navRoutes = ['home', 'ajax', 'chat', 'grid', 'base', 'components', 'ko-group', 'awesome'];
+   var navRoutes = ['home', 'ajax', 'chat', 'grid', 'base', 'prettify', 'components', 'ko-group', 'awesome'];
 
    var fruits = [
       {
@@ -268,7 +268,7 @@ jQuery.support.cors = true;
       self.userName = ko.observable();
       self.sendMessage = function(form) {
          now.distribute(form.message.value);
-      }
+      };
       self.setName = function(form) {
          var n = form.userName.value;
          self.userName(n);

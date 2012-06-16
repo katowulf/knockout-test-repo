@@ -6,7 +6,7 @@ var express = require('express')
    , conf = {
          app: app,
          host: os.hostname(),
-         port: 3000,
+         port: 4001,
          instance: 'dev-local-wsnode',
          version: '0.1-alpha',
          devmode: app.settings.env !== 'production',
