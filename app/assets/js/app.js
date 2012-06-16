@@ -6,7 +6,7 @@ jQuery.support.cors = true;
    /**************************
     * Config
     **************************/
-   var apiUrl = 'http://ko.test:3000';
+   var apiUrl = 'http://ko.wordspot.org:4001';
 
    var navRoutes = ['home', 'ajax', 'chat', 'grid', 'base', 'prettify', 'components', 'ko-group', 'awesome'];
 
