@@ -6,6 +6,7 @@ var count = 5
    , _u = require('underscore');
 
 out.index = function(req, res){
+    console.info('requested user data');
    res.json(_data());
 };
 
@@ -75,7 +76,6 @@ function _update(data) {
    else {
       console.error('now.serverUpdate was not declared on client?');
    }
-   setTimeout(function() {
       if( everyone.now.update ) {
          console.log('sending user update', data);
          everyone.now.update(data);
@@ -83,5 +83,4 @@ function _update(data) {
       else {
          console.error('now.update was not declared on client?');
       }
-   }, 500);
 }
